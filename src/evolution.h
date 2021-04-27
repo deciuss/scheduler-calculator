@@ -106,24 +106,11 @@ void reproduce(
         int child[p.numberOfEvents][3]
 );
 
-void mutation1 (
-        struct Params p,
-        int individual[p.numberOfEvents][3]
-);
-
 void mutation2 (
         struct Params p,
         bool eventRoomFit[p.numberOfEvents][p.numberOfRooms],
         struct Node *eventBlock[p.numberOfBlocks],
         int timeslotNeighborhoodFlat[p.numberOfTimeslots][2],
-        int individual[p.numberOfEvents][3]
-);
-
-void mutation3 (
-        struct Params p,
-        bool eventRoomFit[p.numberOfEvents][p.numberOfRooms],
-        int timeslotNeighborhoodFlat[p.numberOfTimeslots][2],
-        bool eventSameSubject[p.numberOfEvents][p.numberOfEvents],
         int individual[p.numberOfEvents][3]
 );
 

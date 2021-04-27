@@ -5,8 +5,8 @@
  *      Author: deciuss
  */
 
-#ifndef POPULATION_POPULATION_H_
-#define POPULATION_POPULATION_H_
+#ifndef EVOLUTION_POPULATION_H_
+#define EVOLUTION_POPULATION_H_
 #include <stdlib.h>
 
 struct Population {
@@ -16,4 +16,4 @@ struct Population {
 
 struct Population* Population(int size);
 
-#endif /* POPULATION_POPULATION_H_ */
+#endif /* EVOLUTION_POPULATION_H_ */
