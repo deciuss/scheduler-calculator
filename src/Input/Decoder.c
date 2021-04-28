@@ -19,6 +19,7 @@ void _Decoder_populateIntArrayWithFileLines(FILE *fp, int size, int* array) {
         fgets(buff, 255, (FILE*)fp);
     	array[i] = atoi(buff);
     }
+    if (fgetc(fp) != '\n') exit(221);
 }
 
 void _Decoder_populateBoolMatrixWithFileLine(FILE *fp, int sizeX, int sizeY, bool** matrix) {
@@ -27,7 +28,7 @@ void _Decoder_populateBoolMatrixWithFileLine(FILE *fp, int sizeX, int sizeY, boo
             matrix[i][j] = (fgetc(fp) == '0') ? false : true;
         }
     }
-    if (fgetc(fp) != '\n') exit(221);
+    if (fgetc(fp) != '\n') exit(222);
 
 }
 
@@ -40,6 +41,7 @@ void _Decoder_populateEventBlocksArrayWithFileLines(FILE *fp, int size, struct E
         	eventBlocks[i]->events[j] = _Decoder_getIntFromFileLine(fp);
         }
     }
+    if (fgetc(fp) != '\n') exit(223);
 }
 
 struct Data* Decoder_decode(const char* inputDataFilePathName) {
@@ -53,10 +55,11 @@ struct Data* Decoder_decode(const char* inputDataFilePathName) {
 
 	struct Data* data = Data(numberOfEvents, numberOfRooms, numberOfTimeslots, numberOfBlocks);
 
+	_Decoder_populateEventBlocksArrayWithFileLines(fp, numberOfBlocks, data->eventBlocks);
 	_Decoder_populateBoolMatrixWithFileLine(fp, numberOfEvents, numberOfEvents, data->eventTimeslotShare);
 	_Decoder_populateBoolMatrixWithFileLine(fp, numberOfEvents, numberOfRooms, data->eventRoomFit);
 	_Decoder_populateIntArrayWithFileLines(fp, numberOfTimeslots, data->timeslotNeighborNext);
-	_Decoder_populateEventBlocksArrayWithFileLines(fp, numberOfBlocks, data->eventBlocks);
+
 
 	fclose(fp);
 

@@ -10,7 +10,7 @@
 bool** _Data_constructBoolMatrix(int sizeX, int sizeY) {
 	bool** matrix = malloc(sizeof(bool *) * sizeX);
 	for (int i = 0; i < sizeX; i++) {
-		matrix[i] = malloc(sizeof(int));
+		matrix[i] = malloc(sizeof(bool) * sizeY);
 	}
 	return matrix;
 }
