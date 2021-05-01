@@ -18,6 +18,7 @@ struct Individual {
 
 struct Individual* Individual(int numberOfGenes);
 void Individual_updateGene(struct Individual* individual, unsigned int position, struct Gene * gene);
-void Individual_destruct(struct Individual * individual);
+void Individual_destruct(struct Individual* individual);
+int Individual_compare(struct Individual* individualA, struct Individual * individualB);
 
 #endif /* INDIVIDUAL_H_ */

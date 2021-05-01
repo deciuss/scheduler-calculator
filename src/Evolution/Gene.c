@@ -17,3 +17,9 @@ struct Gene* Gene(int timeslot, int room) {
 void Gene_destruct(struct Gene * gene) {
     free(gene);
 }
+
+struct Gene* Gene_clone(struct Gene * original) {
+	struct Gene* clone = Gene(original->timeslot, original->room);
+	clone->isLastBlock = original->isLastBlock;
+	return clone;
+}

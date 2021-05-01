@@ -10,6 +10,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include "EventBlock.h"
+#include "../Utils.h"
 
 struct Data{
     int numberOfEvents;

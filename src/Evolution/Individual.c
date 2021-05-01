@@ -19,9 +19,30 @@ void Individual_updateGene(struct Individual* individual, unsigned int position,
     individual->genes[position] = gene;
 }
 
-void Individual_destruct(struct Individual * individual) {
+void Individual_destruct(struct Individual* individual) {
     for (int i = 0; i < individual->numberOfGenes; i++) {
         Gene_destruct(individual->genes[i]);
     }
     free(individual);
+}
+
+int Individual_compare(struct Individual* individualA, struct Individual* individualB) {
+	if (individualA->hardViolationFactor == NULL) exit(263);
+	if (individualB->hardViolationFactor == NULL) exit(264);
+	if (individualA->softViolationFactor == NULL) exit(263);
+	if (individualB->softViolationFactor == NULL) exit(264);
+
+	if (individualA->hardViolationFactor == individualB->hardViolationFactor) {
+		if (individualA->softViolationFactor == individualB->softViolationFactor) {
+			return 0;
+		} else if(individualA->softViolationFactor > individualB->softViolationFactor) {
+			return -1;
+		} else {
+			return 1;
+		}
+	} else if(individualA->hardViolationFactor > individualB->hardViolationFactor) {
+		return -1;
+	} else {
+		return 1;
+	}
 }

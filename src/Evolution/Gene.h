@@ -18,5 +18,6 @@ struct Gene {
 
 struct Gene* Gene(int timeslot, int room);
 void Gene_destruct(struct Gene * gene);
+struct Gene* Gene_clone(struct Gene * original);
 
 #endif /* GENE_H_ */

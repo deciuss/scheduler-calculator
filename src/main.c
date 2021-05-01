@@ -9,20 +9,26 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdbool.h>
-#include "evolution.h"
 #include "Params.h"
-#include "utils.h"
 #include "Node.h"
 #include "configuration.h"
 #include "Input/Data.h"
 #include "Input/Decoder.h"
+#include "Evolution/Parameters.h"
+#include "utils_old.h"
 
 int main(int argc, char * argv[]) {
 
-
-
-
 	struct Data* data = Decoder_decode(CONFIGURATION_INPUT_DATA_PATH);
+	struct Parameters* parameters = malloc(sizeof(struct Parameters));
+
+	parameters->populationCardinality = 10;
+	parameters->numberOfFamilies = 2;
+	parameters->numberOfChildrenInFamily = 2;
+	parameters->mutation1Rate = 1;
+	parameters->numberOfGenerations = 1000000;
+
+	Parameters_validate(parameters);
 
 
 
