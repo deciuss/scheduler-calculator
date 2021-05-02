@@ -27,7 +27,7 @@ void _Evolution_initializeGeneBlock(struct Data* data, struct EventBlock* eventB
         int i = 0;
         while (true) {
 			struct Gene* gene = Gene(timeslot, room);
-			Individual_updateGene(individual, eventBlock->events[i], gene);
+			individual->genes[eventBlock->events[i]] = gene;
 			if (++i == eventBlock->size) {
 				gene->isLastBlock = true;
 				break;
@@ -77,7 +77,7 @@ struct Individual* _Evolution_reproduce(struct Individual* parentA, struct Indiv
     struct Individual* child = Individual(parentA->numberOfGenes);
 
     for (int geneIndex = 0; geneIndex < parentA->numberOfGenes; geneIndex++) {
-    	Individual_updateGene(child, geneIndex, Gene_clone(parents[currentParentIndex]->genes[geneIndex]));
+    	child->genes[geneIndex] = Gene_clone(parents[currentParentIndex]->genes[geneIndex]);
         if (parents[currentParentIndex]->genes[geneIndex]->isLastBlock == true){
         	currentParentIndex = Utils_getRandomInteger(0, 1);
         }
@@ -86,14 +86,13 @@ struct Individual* _Evolution_reproduce(struct Individual* parentA, struct Indiv
     return child;
 }
 
-void _Evolution_proceedNextGeneration(struct Parameters* parameters, struct Population* population) {
+void _Evolution_nextGeneration(struct Parameters* parameters, struct Population* population) {
 
 	int parentIndex = 0;
 	int toReplaceIndex = 0;
 
 	for (int family = 0; family < parameters->numberOfFamilies; family++) {
 		for (int childInFamily = 0; childInFamily < parameters->numberOfChildrenInFamily; childInFamily++) {
-			struct Individual* newIndividual;
 			Population_replaceNthWorstIndividual(
 					population,
 					toReplaceIndex++,
@@ -105,23 +104,38 @@ void _Evolution_proceedNextGeneration(struct Parameters* parameters, struct Popu
 		}
 		parentIndex += 2;
 	}
-
-
-
 }
 
 struct Population* Evolution_execute(struct Parameters* parameters, struct Data* data) {
 
 	struct Population* population = _Evolution_createPopulation(parameters, data);
 
+	struct Individual* bestIndividual = NULL;
+
 	for (int generationNumber = 0; generationNumber < parameters->numberOfGenerations; generationNumber++) {
 
 		_Evolution_calculatePopulationFitness(data, population);
 
+		if (
+			bestIndividual == NULL
+			|| Individual_compare(bestIndividual, Population_getNthBestIndividual(population, 0)) < 0
+		) {
+			if (bestIndividual != NULL){
+				Individual_destruct(bestIndividual);
+			}
+			bestIndividual = Individual_clone(Population_getNthBestIndividual(population, 0));
+		}
 
+		printf(
+			"generation: %d; current best: %d/%d; overall best: %d/%d\n",
+			generationNumber,
+			Population_getNthBestIndividual(population, 0)->hardViolationFactor,
+			Population_getNthBestIndividual(population, 0)->softViolationFactor,
+			bestIndividual->hardViolationFactor,
+			bestIndividual->softViolationFactor
+		);
 
-
-
+		_Evolution_nextGeneration(parameters, population);
 	}
 
 

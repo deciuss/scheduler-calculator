@@ -43,5 +43,5 @@ struct Individual* Population_getNthBestIndividual(struct Population* population
 void Population_replaceNthWorstIndividual(struct Population* population, int n, struct Individual* newIndividual) {
 	int nthWorstIndividualIndex = population->ranking[population->size -1 - n];
 	Individual_destruct(population->individuals[nthWorstIndividualIndex]);
-	population->individuals[nthWorstIndividualIndex] = individual;
+	population->individuals[nthWorstIndividualIndex] = newIndividual;
 }

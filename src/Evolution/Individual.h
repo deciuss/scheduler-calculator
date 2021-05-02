@@ -7,7 +7,7 @@
 
 #ifndef INDIVIDUAL_H_
 #define INDIVIDUAL_H_
-#include <stdlib.h>
+#include "Gene.h"
 
 struct Individual {
     struct Gene** genes;
@@ -17,8 +17,9 @@ struct Individual {
 };
 
 struct Individual* Individual(int numberOfGenes);
-void Individual_updateGene(struct Individual* individual, unsigned int position, struct Gene * gene);
+void Individual_updateGene(struct Individual* individual, int position, struct Gene * gene);
 void Individual_destruct(struct Individual* individual);
 int Individual_compare(struct Individual* individualA, struct Individual * individualB);
+struct Individual* Individual_clone(struct Individual* original);
 
 #endif /* INDIVIDUAL_H_ */

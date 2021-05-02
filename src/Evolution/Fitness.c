@@ -6,7 +6,6 @@
  */
 #include "Fitness.h"
 
-
 int Fitness_calculateHardViolationFactor(struct Data* data, struct Individual* individual) {
 
     int violation = 0;

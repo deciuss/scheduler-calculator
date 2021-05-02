@@ -15,14 +15,16 @@
 #include "Input/Data.h"
 #include "Input/Decoder.h"
 #include "Evolution/Parameters.h"
-#include "utils_old.h"
+#include "Evolution/Evolution.h"
 
 int main(int argc, char * argv[]) {
+
+	srand(time(0));
 
 	struct Data* data = Decoder_decode(CONFIGURATION_INPUT_DATA_PATH);
 	struct Parameters* parameters = malloc(sizeof(struct Parameters));
 
-	parameters->populationCardinality = 10;
+	parameters->populationCardinality = 100;
 	parameters->numberOfFamilies = 2;
 	parameters->numberOfChildrenInFamily = 2;
 	parameters->mutation1Rate = 1;
@@ -30,10 +32,10 @@ int main(int argc, char * argv[]) {
 
 	Parameters_validate(parameters);
 
+	Evolution_execute(parameters, data);
 
 
 
-//    srand(time(0));
 //
 //    FILE *fp;
 //    fp = fopen(CONFIGURATION_INPUT_DATA_PATH, "r");

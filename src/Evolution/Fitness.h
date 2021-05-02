@@ -8,6 +8,7 @@
 #ifndef EVOLUTION_FITNESS_H_
 #define EVOLUTION_FITNESS_H_
 #include "Individual.h"
+#include "Gene.h"
 #include "../Input/Data.h"
 #include "../Utils.h"
 

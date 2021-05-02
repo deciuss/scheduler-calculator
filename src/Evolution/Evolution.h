@@ -7,10 +7,13 @@
 
 #ifndef EVOLUTION_EVOLUTION_H_
 #define EVOLUTION_EVOLUTION_H_
+#include <stdio.h>
 #include "Parameters.h"
 #include "Population.h"
 #include "Individual.h"
 #include "Gene.h"
+#include "Fitness.h"
+#include "Mutation.h"
 #include "../Utils.h"
 #include "../Input/Data.h"
 #include "../Input/EventBlock.h"

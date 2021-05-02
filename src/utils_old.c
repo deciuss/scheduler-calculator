@@ -5,7 +5,7 @@
  *      Author: deciuss
  */
 
-#include "utils.h"
+#include "utils_old.h"
 
 void populateBoolMatrix(int sizeX, int sizeY, bool matrix[sizeX][sizeY], bool value) {
     for (int i = 0; i < sizeX; i++)
