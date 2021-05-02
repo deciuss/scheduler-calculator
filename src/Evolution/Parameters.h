@@ -7,13 +7,14 @@
 
 #ifndef EVOLUTION_PARAMETERS_H_
 #define EVOLUTION_PARAMETERS_H_
+#include <stdlib.h>
 
 struct Parameters {
     int populationCardinality;
     int numberOfFamilies;
     int numberOfChildrenInFamily;
-    int mutation1Rate;
     int numberOfGenerations;
+    double mutationRateEventBlockRelocation;
 };
 
 void Parameters_validate(struct Parameters* parameters);

@@ -27,3 +27,11 @@ void Utils_destructBoolMatrix(bool** matrix, int sizeX, int sizeY) {
 	}
 	free(matrix);
 }
+
+int Utils_floor(double x) {
+	return (int) x;
+}
+
+double Utils_modf(double x) {
+	return x - (double) (int) x;
+}

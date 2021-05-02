@@ -20,5 +20,6 @@ struct Population* Population(int size);
 struct Individual* Population_getNthBestIndividual(struct Population* population, int n);
 void Population_replaceNthWorstIndividual(struct Population* population, int n, struct Individual* newIndividual);
 void Population_calculateRanking(struct Population* population);
+struct Population* Population_create(int populationCardinality, struct Data* data);
 
 #endif /* EVOLUTION_POPULATION_H_ */

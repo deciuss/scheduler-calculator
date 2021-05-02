@@ -45,3 +45,11 @@ void Population_replaceNthWorstIndividual(struct Population* population, int n, 
 	Individual_destruct(population->individuals[nthWorstIndividualIndex]);
 	population->individuals[nthWorstIndividualIndex] = newIndividual;
 }
+
+struct Population* Population_create(int populationCardinality, struct Data* data) {
+	struct Population* population = Population(populationCardinality);
+    for (int i = 0; i < populationCardinality; i++) {
+       population->individuals[i] = Individual_create(data);
+    }
+    return population;
+}

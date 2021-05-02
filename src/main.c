@@ -9,9 +9,10 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdbool.h>
+
+#include "Configuration.h"
 #include "Params.h"
 #include "Node.h"
-#include "configuration.h"
 #include "Input/Data.h"
 #include "Input/Decoder.h"
 #include "Evolution/Parameters.h"
@@ -25,49 +26,12 @@ int main(int argc, char * argv[]) {
 	struct Parameters* parameters = malloc(sizeof(struct Parameters));
 
 	parameters->populationCardinality = 100;
-	parameters->numberOfFamilies = 2;
-	parameters->numberOfChildrenInFamily = 2;
-	parameters->mutation1Rate = 1;
+	parameters->numberOfFamilies = 4;
+	parameters->numberOfChildrenInFamily = 20;
+	parameters->mutationRateEventBlockRelocation = 1.1;
 	parameters->numberOfGenerations = 1000000;
-
 	Parameters_validate(parameters);
 
 	Evolution_execute(parameters, data);
-
-
-
-//
-//    FILE *fp;
-//    fp = fopen(CONFIGURATION_INPUT_DATA_PATH, "r");
-//
-//    struct Params p;
-//    p.numberOfEvents = getIntFromFileLine(fp);
-//    p.numberOfRooms = getIntFromFileLine(fp);
-//    p.numberOfTimeslots = getIntFromFileLine(fp);
-//    p.numberOfSurvivors = 2;
-//    p.maxBlockSize = 9;
-//    p.hardViolationFactor = 1;
-//    p.mutation1Rate = 0;
-//    p.mutation2Rate = 1;
-//    p.mutation3Rate = 0;
-//    p.populationCardinality = 100;
-//    p.broodSplit[0][0] = 0;
-//    p.broodSplit[0][1] = p.populationCardinality / 2 - 1;
-//    p.broodSplit[1][0] = p.populationCardinality / 2;
-//    p.broodSplit[1][1] = p.populationCardinality;
-
-
-
-//    doEvolution(
-//            p,
-//            eventTimeslotShare,
-//            eventRoomFit,
-//            eventSameSubject,
-//            eventBlockSize,
-//            timeslotNeighborhoodFlat,
-//            eventBlock,
-//            100000000
-//    );
-
     return 0;
 }

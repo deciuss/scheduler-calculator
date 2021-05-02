@@ -9,9 +9,10 @@
 #define EVOLUTION_H_
 #include <limits.h>
 #include <stdbool.h>
+
+#include "Configuration.h"
 #include "Node.h"
 #include "Params.h"
-#include "configuration.h"
 #include "utils_old.h"
 
 int randInt(int lower, int upper);

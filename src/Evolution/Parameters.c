@@ -11,7 +11,7 @@ void Parameters_validate(struct Parameters* parameters) {
 			parameters->numberOfFamilies * parameters->numberOfChildrenInFamily
 			> parameters->populationCardinality - parameters->numberOfFamilies * 2
 	) {
-		exit(5001);
+		exit(233);
 	}
 }
 
