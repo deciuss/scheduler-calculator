@@ -6,7 +6,7 @@
  */
 #include "Utils.h"
 
-int Utils_getRandomInteger(int lower, int upper) {
+inline int Utils_getRandomInteger(int lower, int upper) {
     return (rand() % (upper - lower + 1)) + lower;
 }
 
@@ -28,10 +28,10 @@ void Utils_destructBoolMatrix(bool** matrix, int sizeX, int sizeY) {
 	free(matrix);
 }
 
-int Utils_floor(double x) {
+inline int Utils_floor(double x) {
 	return (int) x;
 }
 
-double Utils_modf(double x) {
+inline double Utils_modf(double x) {
 	return x - (double) (int) x;
 }

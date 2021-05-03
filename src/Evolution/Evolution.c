@@ -76,16 +76,12 @@ struct Population* Evolution_execute(struct Parameters* parameters, struct Data*
 		if (Individual_compare(bestIndividual, Population_getNthBestIndividual(population, 0)) < 0) {
 			Individual_destruct(bestIndividual);
 			bestIndividual = Individual_clone(Population_getNthBestIndividual(population, 0));
+			Encoder_writeIndividualToCsvFile(bestIndividual);
+
+
 		}
 
-		printf(
-			"generation: %d; current best: %d/%d; overall best: %d/%d\n",
-			generationNumber,
-			Population_getNthBestIndividual(population, 0)->hardViolationFactor,
-			Population_getNthBestIndividual(population, 0)->softViolationFactor,
-			bestIndividual->hardViolationFactor,
-			bestIndividual->softViolationFactor
-		);
+		Logger_logProgress(generationNumber, Population_getNthBestIndividual(population, 0), bestIndividual, true);
 
 		_Evolution_nextGeneration(parameters, data, population);
 	}

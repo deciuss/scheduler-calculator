@@ -16,7 +16,7 @@ void _Mutation_eventBlockRelocation(struct Data* data, struct Individual* indivi
 }
 
 void Mutation_execute(struct Parameters* parameters, struct Data* data, struct Individual* individual) {
-	for (int i = 0; i <  Utils_floor(parameters->mutationRateEventBlockRelocation); i++) {
+	for (int i = 0; i < Utils_floor(parameters->mutationRateEventBlockRelocation); i++) {
 		_Mutation_eventBlockRelocation(data, individual);
 	}
 	if (
