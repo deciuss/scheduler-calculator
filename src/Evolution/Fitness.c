@@ -13,7 +13,6 @@ int Fitness_calculateHardViolationFactor(struct Data* data, struct Individual* i
     bool** roomTimeslotPairUsed = Utils_constructBoolMatrix(data->numberOfTimeslots, data->numberOfRooms, false);
 
     for (int i = 0; i < data->numberOfEvents; i++) {
-
         if (roomTimeslotPairUsed[individual->genes[i]->timeslot][individual->genes[i]->room] == true) {
             violation++;
         }

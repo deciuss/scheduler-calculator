@@ -51,14 +51,16 @@ struct Data* Decoder_decode(const char* inputDataFilePathName) {
     int numberOfEvents = _Decoder_getIntFromFileLine(fp);
     int numberOfRooms = _Decoder_getIntFromFileLine(fp);
     int numberOfTimeslots = _Decoder_getIntFromFileLine(fp);
+    int numberOfGroups = _Decoder_getIntFromFileLine(fp);
     int numberOfBlocks = _Decoder_getIntFromFileLine(fp);
 
-	struct Data* data = Data(numberOfEvents, numberOfRooms, numberOfTimeslots, numberOfBlocks);
+	struct Data* data = Data(numberOfEvents, numberOfRooms, numberOfTimeslots, numberOfBlocks, numberOfGroups);
 
 	_Decoder_populateEventBlocksArrayWithFileLines(fp, numberOfBlocks, data->eventBlocks);
 	_Decoder_populateBoolMatrixWithFileLine(fp, numberOfEvents, numberOfEvents, data->eventTimeslotShare);
 	_Decoder_populateBoolMatrixWithFileLine(fp, numberOfEvents, numberOfRooms, data->eventRoomFit);
 	_Decoder_populateIntArrayWithFileLines(fp, numberOfTimeslots, data->timeslotNeighborNext);
+	_Decoder_populateIntArrayWithFileLines(fp, numberOfEvents, data->eventGroup);
 
 
 	fclose(fp);

@@ -77,8 +77,6 @@ struct Population* Evolution_execute(struct Parameters* parameters, struct Data*
 			Individual_destruct(bestIndividual);
 			bestIndividual = Individual_clone(Population_getNthBestIndividual(population, 0));
 			Encoder_writeIndividualToCsvFile(bestIndividual);
-
-
 		}
 
 		Logger_logProgress(generationNumber, Population_getNthBestIndividual(population, 0), bestIndividual, true);
