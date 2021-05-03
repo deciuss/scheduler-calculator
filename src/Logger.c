@@ -6,7 +6,7 @@
  */
 #include "Logger.h"
 
-char* _Logger_setDateTime() {
+char* _Logger_getDateTimeNowFormated() {
 	char format[] = "[%Y-%m-%d %H:%M:%S]";
 	int formatSize = sizeof("[2021-05-03 17:51:53]");
 	char* buffer = malloc(formatSize);
@@ -24,9 +24,8 @@ void Logger_logProgress(
 	struct Individual* overallBest,
 	bool verbose
 ) {
-
 	char* logEntry = malloc(CONFIGURATION_LOG_MAX_ENTRY_LENGTH);
-	char* dateTime = _Logger_setDateTime();
+	char* dateTime = _Logger_getDateTimeNowFormated();
 
 	sprintf(
 		logEntry,
@@ -50,5 +49,4 @@ void Logger_logProgress(
 
 	free(dateTime);
 	free(logEntry);
-
 }
