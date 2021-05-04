@@ -15,7 +15,7 @@ struct GroupGap* GroupGap() {
 	return groupGap;
 }
 
-void GroupGap_step(struct GroupGap* groupGap, bool eventPresentInCurrentStep) {
+void _GroupGap_step(struct GroupGap* groupGap, bool eventPresentInCurrentStep) {
 
 	if (eventPresentInCurrentStep == true) {
 		groupGap->dayOff = false;
@@ -35,7 +35,7 @@ void GroupGap_step(struct GroupGap* groupGap, bool eventPresentInCurrentStep) {
 	groupGap->eventPresentInPreviousStep = eventPresentInCurrentStep;
 }
 
-void GroupGap_endOfTheDay(struct GroupGap* groupGap) {
+void _GroupGap_endOfTheDay(struct GroupGap* groupGap) {
 	groupGap->tempGaps = 0;
 	groupGap->dayOff = true;
 }
@@ -55,9 +55,9 @@ int GroupGap_calculate(struct Data* data, struct Individual* individual) {
 
 	for (int timeslotIndex = 0; timeslotIndex < data->numberOfTimeslots; timeslotIndex++) {
 		for (int groupIndex = 0; groupIndex < data->numberOfGroups; groupIndex++) {
-			GroupGap_step(groupGaps[groupIndex], timeslotGroup[timeslotIndex][groupIndex]);
+			_GroupGap_step(groupGaps[groupIndex], timeslotGroup[timeslotIndex][groupIndex]);
 			if (data->timeslotNeighborNext[timeslotIndex] < 0) {
-				GroupGap_endOfTheDay(groupGaps[groupIndex]);
+				_GroupGap_endOfTheDay(groupGaps[groupIndex]);
 			}
 		}
 	}

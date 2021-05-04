@@ -10,6 +10,11 @@ void _Evolution_calculatePopulationFitness(struct Data* data, struct Population*
 	for (int individualIndex = 0; individualIndex < population->size; individualIndex++) {
 		population->individuals[individualIndex]->hardViolationFactor =
 				Fitness_calculateHardViolationFactor(data, population->individuals[individualIndex]);
+
+		if (population->individuals[individualIndex]->hardViolationFactor > 0) {
+			continue;
+		}
+
 		population->individuals[individualIndex]->softViolationFactor =
 				Fitness_calculateSoftViolationFactor(data, population->individuals[individualIndex]);
 	}

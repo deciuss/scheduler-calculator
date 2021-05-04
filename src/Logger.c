@@ -30,7 +30,7 @@ void Logger_logProgress(
 
 	sprintf(
 		logEntry,
-		"%s Progress: generation: %d; current best: %d/%d; overall best: %d/%d\n",
+		"%s scheduler-calculator progress: generation: %d; current best: %d/%d; overall best: %d/%d\n",
 		dateTime,
 		generationNumber,
 		currentBest->hardViolationFactor,

@@ -19,4 +19,6 @@ struct GroupGap {
 	bool eventPresentInPreviousStep;
 };
 
+int GroupGap_calculate(struct Data* data, struct Individual* individual);
+
 #endif /* VIOLATION_SOFT_GROUPGAP_H_ */
