@@ -23,7 +23,7 @@ struct Data* Data(
 	data->numberOfEventBlocks = numberOfEventBlocks;
 	data->numberOfGroups = numberOfGroups;
 	data->timeslotNeighborNext = malloc(sizeof(int) * numberOfTimeslots);
-	data->eventGroup = malloc(sizeof(int) * numberOfGroups);
+	data->eventGroup = malloc(sizeof(int) * numberOfEvents);
 	data->eventBlocks = malloc(sizeof(struct EventBlock*) * numberOfEventBlocks);
 	data->eventTimeslotShare = Utils_constructBoolMatrix(numberOfEvents, numberOfEvents, false);
 	data->eventRoomFit = Utils_constructBoolMatrix(numberOfEvents, numberOfRooms, false);
