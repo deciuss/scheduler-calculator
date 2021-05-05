@@ -17,7 +17,7 @@
 #include "../Utils.h"
 #include "../Logger.h"
 #include "../Input/Data.h"
-#include "../Input/EventBlock.h"
+#include "../Input/OneToMany.h"
 #include "../Output/Encoder.h"
 
 struct Population* Evolution_execute(struct Parameters* p, struct Data* data);

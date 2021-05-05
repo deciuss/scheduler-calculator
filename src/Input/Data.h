@@ -9,8 +9,8 @@
 #define INPUT_DATA_H_
 #include <stdbool.h>
 #include <stdlib.h>
-#include "EventBlock.h"
 #include "../Utils.h"
+#include "OneToMany.h"
 
 struct Data{
     int numberOfEvents;
@@ -18,9 +18,9 @@ struct Data{
     int numberOfTimeslots;
     int numberOfEventBlocks;
     int numberOfGroups;
-    int* eventGroup;
+    struct OneToMany** eventGroups;
     int* timeslotNeighborNext;
-    struct EventBlock** eventBlocks;
+    struct OneToMany** eventBlocks;
     bool** eventTimeslotShare;
     bool** eventRoomFit;
 };

@@ -9,7 +9,7 @@
 #define INPUT_DECODER_H_
 #include <stdio.h>
 #include "Data.h"
-#include "EventBlock.h"
+#include "OneToMany.h"
 
 struct Data* Decoder_decode(const char * inputDataFilePathName);
 

@@ -26,7 +26,7 @@ int main(int argc, char * argv[]) {
 	parameters->populationCardinality = 1000;
 	parameters->numberOfFamilies = 4;
 	parameters->numberOfChildrenInFamily = 200;
-	parameters->mutationRateEventBlockRelocation = 1.1;
+	parameters->mutationRateEventBlockRelocation = 1.2;
 	parameters->numberOfGenerations = 1000000;
 	Parameters_validate(parameters);
 

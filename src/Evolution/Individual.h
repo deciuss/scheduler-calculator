@@ -24,7 +24,7 @@ void Individual_updateGene(struct Individual* individual, int position, struct G
 void Individual_destruct(struct Individual* individual);
 int Individual_compare(struct Individual* individualA, struct Individual * individualB);
 struct Individual* Individual_clone(struct Individual* original);
-void Individual_initializeGeneBlock(struct Data* data, struct EventBlock* eventBlock, struct Individual* individual);
+void Individual_initializeGeneBlock(struct Data* data, struct OneToMany* eventBlock, struct Individual* individual);
 struct Individual* Individual_create(struct Data* data);
 
 #endif /* INDIVIDUAL_H_ */

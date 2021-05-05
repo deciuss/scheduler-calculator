@@ -75,8 +75,8 @@ int _Individual_getRoomForEvent(struct Data* data, int event) {
     }
 }
 
-void Individual_initializeGeneBlock(struct Data* data, struct EventBlock* eventBlock, struct Individual* individual) {
-    int room = _Individual_getRoomForEvent(data, eventBlock->events[0]);
+void Individual_initializeGeneBlock(struct Data* data, struct OneToMany* eventBlock, struct Individual* individual) {
+    int room = _Individual_getRoomForEvent(data, eventBlock->items[0]);
     bool success = false;
     while (! success) {
         success = true;
@@ -84,7 +84,7 @@ void Individual_initializeGeneBlock(struct Data* data, struct EventBlock* eventB
         int i = 0;
         while (true) {
 			struct Gene* gene = Gene(timeslot, room);
-			Individual_updateGene(individual, eventBlock->events[i], gene);
+			Individual_updateGene(individual, eventBlock->items[i], gene);
 			if (++i == eventBlock->size) {
 				gene->isLastBlock = true;
 				break;
