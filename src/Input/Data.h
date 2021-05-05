@@ -17,12 +17,20 @@ struct Data{
     int numberOfRooms;
     int numberOfTimeslots;
     int numberOfEventBlocks;
+    int numberOfGroups;
+    int* eventGroup;
     int* timeslotNeighborNext;
     struct EventBlock** eventBlocks;
     bool** eventTimeslotShare;
     bool** eventRoomFit;
 };
 
-struct Data* Data(int numberOfEvents, int numberOfRooms, int numberOfTimeslots, int numberOfEventBlocks);
+struct Data* Data(
+	int numberOfEvents,
+	int numberOfRooms,
+	int numberOfTimeslots,
+	int numberOfEventBlocks,
+	int numberOfGroups
+);
 
 #endif /* INPUT_DATA_H_ */

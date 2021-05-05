@@ -11,6 +11,8 @@
 #include "Gene.h"
 #include "../Input/Data.h"
 #include "../Utils.h"
+#include "../Violation/Hard/Collision.h"
+#include "../Violation/Soft/GroupGap.h"
 
 int Fitness_calculateHardViolationFactor(struct Data* data, struct Individual* individual);
 int Fitness_calculateSoftViolationFactor(struct Data* data, struct Individual* individual);
