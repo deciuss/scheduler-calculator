@@ -20,7 +20,9 @@ int main(int argc, char * argv[]) {
 
 	srand(time(0));
 
-	struct Data* data = Decoder_decode(CONFIGURATION_INPUT_DATA_PATH);
+	struct Configuration* configuration = Configuration(argc, argv);
+
+	struct Data* data = Decoder_decode(CONFIGURATION_INPUT_DATA_PATHNAME);
 
 	struct Parameters* parameters = malloc(sizeof(struct Parameters));
 	parameters->populationCardinality = 1000;
@@ -30,7 +32,7 @@ int main(int argc, char * argv[]) {
 	parameters->numberOfGenerations = 1000000;
 	Parameters_validate(parameters);
 
-	Evolution_execute(parameters, data);
+	Evolution_execute(parameters, configuration, data);
 
     return 0;
 }

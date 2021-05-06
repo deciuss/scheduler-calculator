@@ -15,11 +15,16 @@
 #include "Fitness.h"
 #include "Mutation.h"
 #include "../Utils.h"
+#include "../Configuration.h"
 #include "../Logger.h"
 #include "../Input/Data.h"
 #include "../Input/OneToMany.h"
 #include "../Output/Encoder.h"
 
-struct Population* Evolution_execute(struct Parameters* p, struct Data* data);
+struct Population* Evolution_execute(
+	struct Parameters* p,
+	struct Configuration* configuration,
+	struct Data* data
+);
 
 #endif /* EVOLUTION_EVOLUTION_H_ */

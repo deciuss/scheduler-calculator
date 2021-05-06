@@ -68,7 +68,11 @@ void _Evolution_nextGeneration(struct Parameters* parameters, struct Data* data,
 	_Evolution_mutate(parameters, data, population);
 }
 
-struct Population* Evolution_execute(struct Parameters* parameters, struct Data* data) {
+struct Population* Evolution_execute(
+	struct Parameters* parameters,
+	struct Configuration* configuration,
+	struct Data* data
+) {
 
 	struct Population* population = Population_create(parameters->populationCardinality, data);
 
@@ -81,7 +85,9 @@ struct Population* Evolution_execute(struct Parameters* parameters, struct Data*
 		if (Individual_compare(bestIndividual, Population_getNthBestIndividual(population, 0)) < 0) {
 			Individual_destruct(bestIndividual);
 			bestIndividual = Individual_clone(Population_getNthBestIndividual(population, 0));
-			Encoder_writeIndividualToCsvFile(bestIndividual);
+			if (bestIndividual->hardViolationFactor == 0) {
+				Encoder_writeIndividualToTempCsvFile(configuration, generationNumber, bestIndividual);
+			}
 		}
 
 		Logger_logProgress(generationNumber, Population_getNthBestIndividual(population, 0), bestIndividual, true);

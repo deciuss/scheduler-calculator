@@ -10,6 +10,7 @@
 #include <stdlib.h>
 
 struct Parameters {
+	int dataId;
     int populationCardinality;
     int numberOfFamilies;
     int numberOfChildrenInFamily;
