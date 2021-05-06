@@ -32,7 +32,9 @@ int main(int argc, char * argv[]) {
 	parameters->numberOfGenerations = 1000000;
 	Parameters_validate(parameters);
 
-	Evolution_execute(parameters, configuration, data);
+	struct Population* population = Evolution_execute(parameters, configuration, data);
+
+	Encoder_writeIndividualToFinalCsvFile(configuration, Population_getNthBestIndividual(population, 0));
 
     return 0;
 }

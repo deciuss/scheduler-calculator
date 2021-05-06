@@ -92,6 +92,10 @@ struct Population* Evolution_execute(
 
 		Logger_logProgress(generationNumber, Population_getNthBestIndividual(population, 0), bestIndividual, true);
 
+		if (bestIndividual->hardViolationFactor == 0 && bestIndividual->softViolationFactor == 0) {
+			break;
+		}
+
 		_Evolution_nextGeneration(parameters, data, population);
 	}
 

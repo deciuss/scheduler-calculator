@@ -18,7 +18,9 @@ struct Data{
     int numberOfTimeslots;
     int numberOfEventBlocks;
     int numberOfGroups;
+    int numberOfTeachers;
     struct OneToMany** eventGroups;
+    int*  eventTeacher;
     int* timeslotNeighborNext;
     struct OneToMany** eventBlocks;
     bool** eventTimeslotShare;
@@ -30,7 +32,8 @@ struct Data* Data(
 	int numberOfRooms,
 	int numberOfTimeslots,
 	int numberOfEventBlocks,
-	int numberOfGroups
+	int numberOfGroups,
+	int numberOfTeachers
 );
 
 #endif /* INPUT_DATA_H_ */

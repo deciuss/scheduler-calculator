@@ -13,6 +13,7 @@
 #include "../Utils.h"
 #include "../Violation/Hard/Collision.h"
 #include "../Violation/Soft/GroupGap.h"
+#include "../Violation/Soft/TeacherGap.h"
 
 int Fitness_calculateHardViolationFactor(struct Data* data, struct Individual* individual);
 int Fitness_calculateSoftViolationFactor(struct Data* data, struct Individual* individual);

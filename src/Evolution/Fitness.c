@@ -20,6 +20,7 @@ int Fitness_calculateSoftViolationFactor(struct Data* data, struct Individual* i
     int violation = 0;
 
     violation += GroupGap_calculate(data, individual);
+    violation += TeacherGap_calculate(data, individual);
 
     return violation;
 }
