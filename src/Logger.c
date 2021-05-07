@@ -33,10 +33,10 @@ void Logger_logProgress(
 		"%s scheduler-calculator progress: generation: %d; current best: %d/%d; overall best: %d/%d\n",
 		dateTime,
 		generationNumber,
-		currentBest->hardViolationFactor,
-		currentBest->softViolationFactor,
-		overallBest->hardViolationFactor,
-		overallBest->softViolationFactor
+		currentBest->violation->hard,
+		currentBest->violation->soft,
+		overallBest->violation->hard,
+		overallBest->violation->soft
 	);
 
     FILE *fp;

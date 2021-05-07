@@ -8,14 +8,14 @@
 
 void _Evolution_calculatePopulationFitness(struct Data* data, struct Population* population) {
 	for (int individualIndex = 0; individualIndex < population->size; individualIndex++) {
-		population->individuals[individualIndex]->hardViolationFactor =
+		population->individuals[individualIndex]->violation->hard =
 				Fitness_calculateHardViolationFactor(data, population->individuals[individualIndex]);
 
-		if (population->individuals[individualIndex]->hardViolationFactor > 2) {
+		if (population->individuals[individualIndex]->violation->hard > 0) {
 			continue;
 		}
 
-		population->individuals[individualIndex]->softViolationFactor =
+		population->individuals[individualIndex]->violation->soft =
 				Fitness_calculateSoftViolationFactor(data, population->individuals[individualIndex]);
 	}
 	Population_calculateRanking(population);
@@ -107,6 +107,10 @@ struct Population* Evolution_execute(
 	struct Population* population = Population_create(parameters->populationCardinality, data);
 
 	struct Individual* bestIndividual = Individual(data->numberOfEvents);
+	struct Individual* lastBestIndividual = Individual(data->numberOfEvents);
+
+	double sigma1 = 1.01;
+	double sigma2 = 0.99;
 
 	for (int generationNumber = 0; generationNumber < parameters->numberOfGenerations; generationNumber++) {
 
@@ -115,10 +119,12 @@ struct Population* Evolution_execute(
 		if (Individual_compare(bestIndividual, Population_getNthBestIndividual(population, 0)) < 0) {
 			Individual_destruct(bestIndividual);
 			bestIndividual = Individual_clone(Population_getNthBestIndividual(population, 0));
-			if (bestIndividual->hardViolationFactor == 0) {
+			if (bestIndividual->violation->hard == 0) {
 				Encoder_writeIndividualToTempCsvFile(configuration, generationNumber, bestIndividual);
 			}
 		}
+
+		printf("%f\n", parameters->mutationRateEventBlockRelocation);
 
 		Logger_logProgress(
 			configuration,
@@ -128,13 +134,51 @@ struct Population* Evolution_execute(
 			true
 		);
 
-		if (bestIndividual->hardViolationFactor == 0 && bestIndividual->softViolationFactor == 0) {
+		if (bestIndividual->violation->hard == 0 && bestIndividual->violation->soft == 0) {
 			break;
 		}
 
 		_Evolution_assertNoDegenerationIfSurvivorsPresent(parameters, bestIndividual, population);
 
+		int result = Individual_compare(lastBestIndividual, Population_getNthBestIndividual(population, 0));
+		int lastDecission = 1;
+
+		if (result < 0 ) {
+			// improvement!
+			// enlarge
+			parameters->mutationRateEventBlockRelocation = parameters->mutationRateEventBlockRelocation * sigma1;
+			lastDecission = 1;
+		} else if (result > 0 ) {
+			// degeneration
+			// decrese
+			parameters->mutationRateEventBlockRelocation = parameters->mutationRateEventBlockRelocation * sigma2;
+			lastDecission = -1;
+		} else {
+			//equal
+
+//			parameters->mutationRateEventBlockRelocation = parameters->mutationRateEventBlockRelocation * sigma2;
+
+			if (parameters->mutationRateEventBlockRelocation < 1.2) {
+//////			if (lastDecission > 0) {
+				parameters->mutationRateEventBlockRelocation = parameters->mutationRateEventBlockRelocation * 1.01;
+			} else {
+				parameters->mutationRateEventBlockRelocation = parameters->mutationRateEventBlockRelocation * 0.99;
+			}
+
+
+
+		}
+
+		Individual_destruct(lastBestIndividual);
+		lastBestIndividual = Individual_clone(Population_getNthBestIndividual(population, 0));
+
+
 		_Evolution_nextGeneration(parameters, data, population);
+
+
+
+
+
 	}
 
 

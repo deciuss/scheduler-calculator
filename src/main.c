@@ -24,15 +24,18 @@ int main(int argc, char * argv[]) {
 
 	struct Data* data = Decoder_decode(CONFIGURATION_INPUT_DATA_PATHNAME);
 
-	struct Parameters* parameters = malloc(sizeof(struct Parameters));
-	parameters->populationCardinality = 1000;
-	parameters->numberOfFamilies = 3;
-	parameters->numberOfChildrenInFamily = 300;
-	parameters->numberOfSurvivors = 1;
-	parameters->numberOfClones = 20;
-	parameters->mutationRateEventBlockRelocation = 1.2;
-	parameters->numberOfGenerations = 1000000;
-	Parameters_validate(parameters);
+	struct Parameters* parameters = Parameters(
+		1000,	// populationCardinality
+		3,		// numberOfFamilies
+		330,	// numberOfChildrenInFamily
+		0,		// numberOfSurvivors
+		0,		// numberOfClones
+		999999,	// numberOfGenerations
+		1.2,	// mutationRateEventBlockRelocation
+		0.01,	// stepIncrementFactor
+		1/5,	// stepIncrementRule
+		10		// stepMemory
+	);
 
 	struct Population* population = Evolution_execute(parameters, configuration, data);
 

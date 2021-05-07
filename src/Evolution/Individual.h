@@ -9,6 +9,7 @@
 #define INDIVIDUAL_H_
 #include <limits.h>
 #include "Gene.h"
+#include "Violation.h"
 #include "../Utils.h"
 #include "../Input/Data.h"
 
@@ -17,6 +18,7 @@ struct Individual {
     int numberOfGenes;
     int hardViolationFactor;
     int softViolationFactor;
+    struct Violation* violation;
 };
 
 struct Individual* Individual(int numberOfGenes);

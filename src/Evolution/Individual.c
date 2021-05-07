@@ -8,9 +8,10 @@
 
 struct Individual* Individual(int numberOfGenes) {
     struct Individual* individual = malloc(sizeof(struct Individual));
+    individual->violation = malloc(sizeof(struct Violation));
     individual->numberOfGenes = numberOfGenes;
-    individual->hardViolationFactor = INT_MAX;
-    individual->softViolationFactor = INT_MAX;
+    individual->violation->hard = INT_MAX;
+    individual->violation->soft = INT_MAX;
     individual->genes = malloc(sizeof(struct Gene*) * numberOfGenes);
     for (int i = 0; i < numberOfGenes; i++) {
     	individual->genes[i] = Gene(0, 0);
@@ -28,6 +29,7 @@ void Individual_destruct(struct Individual* individual) {
         Gene_destruct(individual->genes[i]);
     }
     free(individual->genes);
+    free(individual->violation);
     free(individual);
 }
 
@@ -37,26 +39,13 @@ void Individual_destruct(struct Individual* individual) {
  * Returns  0 if individualA violation == individualB violation
  */
 int Individual_compare(struct Individual* individualA, struct Individual* individualB) {
-
-	if (individualA->hardViolationFactor == individualB->hardViolationFactor) {
-		if (individualA->softViolationFactor == individualB->softViolationFactor) {
-			return 0;
-		} else if(individualA->softViolationFactor > individualB->softViolationFactor) {
-			return -1;
-		} else {
-			return 1;
-		}
-	} else if(individualA->hardViolationFactor > individualB->hardViolationFactor) {
-		return -1;
-	} else {
-		return 1;
-	}
+	return Violation_compare(individualA->violation, individualB->violation);
 }
 
 struct Individual* Individual_clone(struct Individual* original) {
 	struct Individual* clone = Individual(original->numberOfGenes);
-	clone->hardViolationFactor = original->hardViolationFactor;
-	clone->softViolationFactor = original->softViolationFactor;
+	clone->violation->hard = original->violation->hard;
+	clone->violation->soft = original->violation->soft;
 	for (int geneNumber = 0; geneNumber < clone->numberOfGenes; geneNumber++) {
 		Individual_updateGene(clone, geneNumber, Gene_clone(original->genes[geneNumber]));
 	}

@@ -10,7 +10,6 @@
 #include <stdlib.h>
 
 struct Parameters {
-	int dataId;
     int populationCardinality;
     int numberOfFamilies;
     int numberOfChildrenInFamily;
@@ -18,8 +17,22 @@ struct Parameters {
     int numberOfClones;
     int numberOfGenerations;
     double mutationRateEventBlockRelocation;
+    double stepIncrementFactor;
+    double stepIncrementRule;
+    int stepMemorySize;
 };
 
-void Parameters_validate(struct Parameters* parameters);
+struct Parameters* parameters(
+	int populationCardinality,
+	int numberOfFamilies,
+	int numberOfChildrenInFamily,
+	int numberOfSurvivors,
+	int numberOfClones,
+	int numberOfGenerations,
+	double mutationRateEventBlockRelocation,
+	double stepIncrementFactor,
+	double stepIncrementRule,
+	int stepMemorySize
+);
 
 #endif /* EVOLUTION_PARAMETERS_H_ */

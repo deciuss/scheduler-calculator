@@ -42,8 +42,8 @@ void Encoder_writeIndividualToTempCsvFile(
 		path,
 		DIRECTORY_SEPARATOR,
 		generation,
-		individual->hardViolationFactor,
-		individual->softViolationFactor
+		individual->violation->hard,
+		individual->violation->soft
 	);
 
     _Encoder_writeIndividualToCsvFile(pathname, individual);

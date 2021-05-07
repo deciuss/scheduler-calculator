@@ -14,8 +14,8 @@ void _Mutation_eventBlockRelocation(struct Data* data, struct Individual* indivi
 		individual
 	);
 
-    individual->hardViolationFactor = INT_MAX;
-    individual->softViolationFactor = INT_MAX;
+    individual->violation->hard = INT_MAX;
+    individual->violation->soft = INT_MAX;
 
 }
 

@@ -6,7 +6,7 @@
  */
 #include "Parameters.h"
 
-void Parameters_validate(struct Parameters* parameters) {
+void _Parameters_validate(struct Parameters* parameters) {
 	if (
 		parameters->numberOfFamilies * parameters->numberOfChildrenInFamily
 		+ parameters->numberOfFamilies * 2
@@ -24,4 +24,35 @@ void Parameters_validate(struct Parameters* parameters) {
 		exit(234);
 	}
 }
+
+struct Parameters* parameters(
+	int populationCardinality,
+	int numberOfFamilies,
+	int numberOfChildrenInFamily,
+	int numberOfSurvivors,
+	int numberOfClones,
+	int numberOfGenerations,
+	double mutationRateEventBlockRelocation,
+	double stepIncrementFactor,
+	double stepIncrementRule,
+	int stepMemorySize
+) {
+	struct Parameters* parameters = malloc(sizeof(struct Parameters));
+	parameters->populationCardinality = populationCardinality;
+	parameters->numberOfFamilies = numberOfFamilies;
+	parameters->numberOfChildrenInFamily = numberOfChildrenInFamily;
+	parameters->numberOfSurvivors = numberOfSurvivors;
+	parameters->numberOfClones = numberOfClones;
+	parameters->numberOfGenerations = numberOfGenerations;
+	parameters->mutationRateEventBlockRelocation = mutationRateEventBlockRelocation;
+	parameters->stepIncrementFactor = stepIncrementFactor;
+	parameters->stepMemorySize = stepMemorySize;
+
+	_Parameters_validate(parameters);
+
+	return parameters;
+
+}
+
+
 
