@@ -11,7 +11,7 @@ void _Evolution_calculatePopulationFitness(struct Data* data, struct Population*
 		population->individuals[individualIndex]->hardViolationFactor =
 				Fitness_calculateHardViolationFactor(data, population->individuals[individualIndex]);
 
-		if (population->individuals[individualIndex]->hardViolationFactor > 0) {
+		if (population->individuals[individualIndex]->hardViolationFactor > 2) {
 			continue;
 		}
 
@@ -120,7 +120,13 @@ struct Population* Evolution_execute(
 			}
 		}
 
-		Logger_logProgress(generationNumber, Population_getNthBestIndividual(population, 0), bestIndividual, true);
+		Logger_logProgress(
+			configuration,
+			generationNumber,
+			Population_getNthBestIndividual(population, 0),
+			bestIndividual,
+			true
+		);
 
 		if (bestIndividual->hardViolationFactor == 0 && bestIndividual->softViolationFactor == 0) {
 			break;

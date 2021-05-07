@@ -19,6 +19,7 @@ char* _Logger_getDateTimeNowFormated() {
 }
 
 void Logger_logProgress(
+	struct Configuration* configuration,
 	int generationNumber,
 	struct Individual* currentBest,
 	struct Individual* overallBest,
@@ -39,7 +40,7 @@ void Logger_logProgress(
 	);
 
     FILE *fp;
-    fp = fopen(CONFIGURATION_LOG_PATH, "a");
+    fp = fopen(configuration->logPathname, "a");
     fprintf(fp, "%s", logEntry);
     fclose(fp);
 

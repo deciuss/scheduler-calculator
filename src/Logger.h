@@ -15,6 +15,7 @@
 #include "Evolution/Individual.h"
 
 void Logger_logProgress(
+	struct Configuration* configuration,
 	int generationNumber,
 	struct Individual* currentBest,
 	struct Individual* overallBest,
