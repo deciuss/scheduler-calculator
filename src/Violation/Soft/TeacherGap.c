@@ -14,7 +14,7 @@ int TeacherGap_calculate(struct Data* data, struct Individual* individual) {
 		timeslotTeacher[individual->genes[eventIndex]->timeslot][data->eventTeacher[eventIndex]] = true;
 	}
 
-	int gapCounter = Gap_calculate(data, timeslotTeacher);
+	int gapCounter = Gap_calculate(data, data->numberOfTeachers, timeslotTeacher);
 
 	Utils_destructBoolMatrix(timeslotTeacher, data->numberOfTimeslots, data->numberOfTeachers);
 

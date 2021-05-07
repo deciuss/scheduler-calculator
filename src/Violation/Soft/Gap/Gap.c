@@ -40,27 +40,27 @@ void _Gap_endOfTheDay(struct Gap* gap) {
 	gap->dayOff = true;
 }
 
-int Gap_calculate(struct Data* data, bool** timeslotSubject) {
+int Gap_calculate(struct Data* data, int numberOfSubjects, bool** timeslotSubject) {
 
-	struct Gap** gaps = malloc(sizeof(struct Gap) * data->numberOfGroups);
-	for (int groupIndex = 0; groupIndex < data->numberOfGroups; groupIndex++) {
-		gaps[groupIndex] = Gap();
+	struct Gap** gaps = malloc(sizeof(struct Gap) * numberOfSubjects);
+	for (int subjectIndex = 0; subjectIndex < numberOfSubjects; subjectIndex++) {
+		gaps[subjectIndex] = Gap();
 	}
 
 	for (int timeslotIndex = 0; timeslotIndex < data->numberOfTimeslots; timeslotIndex++) {
-		for (int groupIndex = 0; groupIndex < data->numberOfGroups; groupIndex++) {
-			_Gap_step(gaps[groupIndex], timeslotSubject[timeslotIndex][groupIndex]);
+		for (int subjectIndex = 0; subjectIndex < numberOfSubjects; subjectIndex++) {
+			_Gap_step(gaps[subjectIndex], timeslotSubject[timeslotIndex][subjectIndex]);
 			if (data->timeslotNeighborNext[timeslotIndex] < 0) {
-				_Gap_endOfTheDay(gaps[groupIndex]);
+				_Gap_endOfTheDay(gaps[subjectIndex]);
 			}
 		}
 	}
 
 	int gapCounter = 0;
 
-	for (int groupIndex = 0; groupIndex < data->numberOfGroups; groupIndex++) {
-		gapCounter += gaps[groupIndex]->gaps;
-		free(gaps[groupIndex]);
+	for (int subjectIndex = 0; subjectIndex < numberOfSubjects; subjectIndex++) {
+		gapCounter += gaps[subjectIndex]->gaps;
+		free(gaps[subjectIndex]);
 	}
 
 	free(gaps);

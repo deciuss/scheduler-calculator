@@ -14,6 +14,8 @@ struct Parameters {
     int populationCardinality;
     int numberOfFamilies;
     int numberOfChildrenInFamily;
+    int numberOfSurvivors;
+    int numberOfClones;
     int numberOfGenerations;
     double mutationRateEventBlockRelocation;
 };

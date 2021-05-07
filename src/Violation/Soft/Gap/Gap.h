@@ -18,6 +18,6 @@ struct Gap {
 	bool eventPresentInPreviousStep;
 };
 
-int Gap_calculate(struct Data* data, bool** timeslotSubject);
+int Gap_calculate(struct Data* data, int numberOfSubjects, bool** timeslotSubject);
 
 #endif /* VIOLATION_SOFT_GAP_H_ */

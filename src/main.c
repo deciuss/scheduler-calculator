@@ -26,8 +26,10 @@ int main(int argc, char * argv[]) {
 
 	struct Parameters* parameters = malloc(sizeof(struct Parameters));
 	parameters->populationCardinality = 1000;
-	parameters->numberOfFamilies = 4;
-	parameters->numberOfChildrenInFamily = 200;
+	parameters->numberOfFamilies = 3;
+	parameters->numberOfChildrenInFamily = 300;
+	parameters->numberOfSurvivors = 1;
+	parameters->numberOfClones = 0;
 	parameters->mutationRateEventBlockRelocation = 1.2;
 	parameters->numberOfGenerations = 1000000;
 	Parameters_validate(parameters);

@@ -41,7 +41,16 @@ struct Individual* _Evolution_reproduce(struct Individual* parentA, struct Indiv
 }
 
 void _Evolution_mutate(struct Parameters* parameters, struct Data* data, struct Population* population) {
+	bool isProtected;
 	for (int individualIndex = 0; individualIndex < population->size; individualIndex++){
+		isProtected = false;
+		for (int survivor = 0; survivor < parameters->numberOfSurvivors; survivor++) {
+			if (population->ranking[survivor] == individualIndex) {
+				isProtected = true;
+				break;
+			}
+		}
+		if (isProtected) continue;
 		Mutation_execute(parameters, data, population->individuals[individualIndex]);
 	}
 }
@@ -54,18 +63,39 @@ void _Evolution_nextGeneration(struct Parameters* parameters, struct Data* data,
 	for (int family = 0; family < parameters->numberOfFamilies; family++) {
 		for (int childInFamily = 0; childInFamily < parameters->numberOfChildrenInFamily; childInFamily++) {
 			Population_replaceNthWorstIndividual(
-					population,
-					toReplaceIndex++,
-					_Evolution_reproduce(
-							Population_getNthBestIndividual(population, parentIndex),
-							Population_getNthBestIndividual(population, parentIndex + 1)
-					)
+				population,
+				toReplaceIndex++,
+				_Evolution_reproduce(
+					Population_getNthBestIndividual(population, parentIndex),
+					Population_getNthBestIndividual(population, parentIndex + 1)
+				)
 			);
 		}
 		parentIndex += 2;
 	}
 
+	for (int clone = 0; clone < parameters->numberOfClones; clone++) {
+		Population_replaceNthWorstIndividual(
+			population,
+			toReplaceIndex++,
+			Individual_clone(Population_getNthBestIndividual(population, clone))
+		);
+	}
+
 	_Evolution_mutate(parameters, data, population);
+}
+
+void _Evolution_assertNoDegenerationIfSurvivorsPresent(
+	struct Parameters* parameters,
+	struct Individual* bestIndividual,
+	struct Population* population
+) {
+	if (
+		parameters->numberOfSurvivors > 0
+		&& Individual_compare(bestIndividual, Population_getNthBestIndividual(population, 0)) > 0
+	) {
+		exit(67);
+	}
 }
 
 struct Population* Evolution_execute(
@@ -95,6 +125,8 @@ struct Population* Evolution_execute(
 		if (bestIndividual->hardViolationFactor == 0 && bestIndividual->softViolationFactor == 0) {
 			break;
 		}
+
+		_Evolution_assertNoDegenerationIfSurvivorsPresent(parameters, bestIndividual, population);
 
 		_Evolution_nextGeneration(parameters, data, population);
 	}

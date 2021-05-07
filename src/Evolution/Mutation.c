@@ -13,6 +13,10 @@ void _Mutation_eventBlockRelocation(struct Data* data, struct Individual* indivi
 		data->eventBlocks[Utils_getRandomInteger(0, data->numberOfEventBlocks - 1)],
 		individual
 	);
+
+    individual->hardViolationFactor = INT_MAX;
+    individual->softViolationFactor = INT_MAX;
+
 }
 
 void Mutation_execute(struct Parameters* parameters, struct Data* data, struct Individual* individual) {
