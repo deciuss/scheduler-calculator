@@ -23,6 +23,7 @@ void Logger_logProgress(
 	int generationNumber,
 	struct Individual* currentBest,
 	struct Individual* overallBest,
+	double stepCurrentFactor,
 	bool verbose
 ) {
 	char* logEntry = malloc(CONFIGURATION_LOG_MAX_ENTRY_LENGTH);
@@ -30,9 +31,10 @@ void Logger_logProgress(
 
 	sprintf(
 		logEntry,
-		"%s scheduler-calculator progress: generation: %d; current best: %d/%d; overall best: %d/%d\n",
+		"%s scheduler-calculator progress: generation: %d; step factor: %f; current best: %d/%d; overall best: %d/%d\n",
 		dateTime,
 		generationNumber,
+		stepCurrentFactor,
 		currentBest->violation->hard,
 		currentBest->violation->soft,
 		overallBest->violation->hard,

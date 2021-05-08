@@ -16,8 +16,6 @@
 struct Individual {
     struct Gene** genes;
     int numberOfGenes;
-    int hardViolationFactor;
-    int softViolationFactor;
     struct Violation* violation;
 };
 

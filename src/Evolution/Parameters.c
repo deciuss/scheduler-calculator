@@ -25,7 +25,7 @@ void _Parameters_validate(struct Parameters* parameters) {
 	}
 }
 
-struct Parameters* parameters(
+struct Parameters* Parameters(
 	int populationCardinality,
 	int numberOfFamilies,
 	int numberOfChildrenInFamily,
@@ -35,6 +35,8 @@ struct Parameters* parameters(
 	double mutationRateEventBlockRelocation,
 	double stepIncrementFactor,
 	double stepIncrementRule,
+    double stepFactorMax,
+    double stepFactorMin,
 	int stepMemorySize
 ) {
 	struct Parameters* parameters = malloc(sizeof(struct Parameters));
@@ -46,6 +48,8 @@ struct Parameters* parameters(
 	parameters->numberOfGenerations = numberOfGenerations;
 	parameters->mutationRateEventBlockRelocation = mutationRateEventBlockRelocation;
 	parameters->stepIncrementFactor = stepIncrementFactor;
+	parameters->stepFactorMax = stepFactorMax;
+	parameters->stepFactorMin = stepFactorMin;
 	parameters->stepMemorySize = stepMemorySize;
 
 	_Parameters_validate(parameters);

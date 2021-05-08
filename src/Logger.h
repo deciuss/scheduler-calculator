@@ -19,6 +19,7 @@ void Logger_logProgress(
 	int generationNumber,
 	struct Individual* currentBest,
 	struct Individual* overallBest,
+	double stepCurrentFactor,
 	bool verbose
 );
 

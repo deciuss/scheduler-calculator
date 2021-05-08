@@ -19,10 +19,12 @@ struct Parameters {
     double mutationRateEventBlockRelocation;
     double stepIncrementFactor;
     double stepIncrementRule;
+    double stepFactorMax;
+    double stepFactorMin;
     int stepMemorySize;
 };
 
-struct Parameters* parameters(
+struct Parameters* Parameters(
 	int populationCardinality,
 	int numberOfFamilies,
 	int numberOfChildrenInFamily,
@@ -32,6 +34,8 @@ struct Parameters* parameters(
 	double mutationRateEventBlockRelocation,
 	double stepIncrementFactor,
 	double stepIncrementRule,
+    double stepFactorMax,
+    double stepFactorMin,
 	int stepMemorySize
 );
 

@@ -7,20 +7,31 @@
 
 #ifndef EVOLUTION_STEP_H_
 #define EVOLUTION_STEP_H_
+#include <stdbool.h>
+#include <stdlib.h>
+#include <limits.h>
 #include "Violation.h"
 
 struct Step {
-	int memorySize;
+	int successArraySize;
 	double incrementFactor;
-	int* memory;
+	double incrementRule;
+	bool* sucessArray;
 	double currentFactor;
+	double factorMax;
+	double factorMin;
+	int generationCounter;
+	struct Violation* lastViolation;
 };
 
 struct Step* Step(
 	int memorySize,
-	double incrementFactor
+	double incrementFactor,
+	double incrementRule,
+	double factorMax,
+	double factorMin
 );
 
-void Step_addCurrentGenerationViolation(struct Violation* violation);
+void Step_addCurrentGenerationViolation(struct Step* step, struct Violation* violation);
 
 #endif /* EVOLUTION_STEP_H_ */

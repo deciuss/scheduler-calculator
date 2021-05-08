@@ -40,7 +40,12 @@ struct Individual* _Evolution_reproduce(struct Individual* parentA, struct Indiv
     return child;
 }
 
-void _Evolution_mutate(struct Parameters* parameters, struct Data* data, struct Population* population) {
+void _Evolution_mutate(
+	struct Parameters* parameters,
+	struct Data* data,
+	struct Step* step,
+	struct Population* population
+) {
 	bool isProtected;
 	for (int individualIndex = 0; individualIndex < population->size; individualIndex++){
 		isProtected = false;
@@ -51,11 +56,16 @@ void _Evolution_mutate(struct Parameters* parameters, struct Data* data, struct 
 			}
 		}
 		if (isProtected) continue;
-		Mutation_execute(parameters, data, population->individuals[individualIndex]);
+		Mutation_execute(parameters, data, step, population->individuals[individualIndex]);
 	}
 }
 
-void _Evolution_nextGeneration(struct Parameters* parameters, struct Data* data, struct Population* population) {
+void _Evolution_nextGeneration(
+	struct Parameters* parameters,
+	struct Data* data,
+	struct Step* step,
+	struct Population* population
+) {
 
 	int parentIndex = 0;
 	int toReplaceIndex = 0;
@@ -82,7 +92,7 @@ void _Evolution_nextGeneration(struct Parameters* parameters, struct Data* data,
 		);
 	}
 
-	_Evolution_mutate(parameters, data, population);
+	_Evolution_mutate(parameters, data, step, population);
 }
 
 void _Evolution_assertNoDegenerationIfSurvivorsPresent(
@@ -107,10 +117,14 @@ struct Population* Evolution_execute(
 	struct Population* population = Population_create(parameters->populationCardinality, data);
 
 	struct Individual* bestIndividual = Individual(data->numberOfEvents);
-	struct Individual* lastBestIndividual = Individual(data->numberOfEvents);
 
-	double sigma1 = 1.01;
-	double sigma2 = 0.99;
+	struct Step* step = Step(
+		parameters->stepMemorySize,
+		parameters->stepIncrementFactor,
+		parameters->stepIncrementRule,
+		parameters->stepFactorMax,
+		parameters->stepFactorMin
+	);
 
 	for (int generationNumber = 0; generationNumber < parameters->numberOfGenerations; generationNumber++) {
 
@@ -124,13 +138,12 @@ struct Population* Evolution_execute(
 			}
 		}
 
-		printf("%f\n", parameters->mutationRateEventBlockRelocation);
-
 		Logger_logProgress(
 			configuration,
 			generationNumber,
 			Population_getNthBestIndividual(population, 0),
 			bestIndividual,
+			step->currentFactor,
 			true
 		);
 
@@ -140,45 +153,9 @@ struct Population* Evolution_execute(
 
 		_Evolution_assertNoDegenerationIfSurvivorsPresent(parameters, bestIndividual, population);
 
-		int result = Individual_compare(lastBestIndividual, Population_getNthBestIndividual(population, 0));
-		int lastDecission = 1;
+		Step_addCurrentGenerationViolation(step, Population_getNthBestIndividual(population, 0)->violation);
 
-		if (result < 0 ) {
-			// improvement!
-			// enlarge
-			parameters->mutationRateEventBlockRelocation = parameters->mutationRateEventBlockRelocation * sigma1;
-			lastDecission = 1;
-		} else if (result > 0 ) {
-			// degeneration
-			// decrese
-			parameters->mutationRateEventBlockRelocation = parameters->mutationRateEventBlockRelocation * sigma2;
-			lastDecission = -1;
-		} else {
-			//equal
-
-//			parameters->mutationRateEventBlockRelocation = parameters->mutationRateEventBlockRelocation * sigma2;
-
-			if (parameters->mutationRateEventBlockRelocation < 1.2) {
-//////			if (lastDecission > 0) {
-				parameters->mutationRateEventBlockRelocation = parameters->mutationRateEventBlockRelocation * 1.01;
-			} else {
-				parameters->mutationRateEventBlockRelocation = parameters->mutationRateEventBlockRelocation * 0.99;
-			}
-
-
-
-		}
-
-		Individual_destruct(lastBestIndividual);
-		lastBestIndividual = Individual_clone(Population_getNthBestIndividual(population, 0));
-
-
-		_Evolution_nextGeneration(parameters, data, population);
-
-
-
-
-
+		_Evolution_nextGeneration(parameters, data, step, population);
 	}
 
 
