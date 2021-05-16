@@ -24,9 +24,9 @@ int main(int argc, char * argv[]) {
 	struct Data* data = Decoder_decode(CONFIGURATION_INPUT_DATA_PATHNAME);
 
 	struct Parameters* parameters = Parameters(
-		1000,		// populationCardinality
-		3,			// numberOfFamilies
-		330,		// numberOfChildrenInFamily
+		400,		// populationCardinality
+		2,			// numberOfFamilies
+		198,		// numberOfChildrenInFamily
 		0,			// numberOfSurvivors
 		0,			// numberOfClones
 		999999,		// numberOfGenerations
@@ -35,7 +35,7 @@ int main(int argc, char * argv[]) {
 		1/5,		// stepIncrementRule
 		10.0,		// stepFactorMax
 		0.0000001,	// stepFactorMin
-		10			// stepMemory
+		15			// stepMemory
 	);
 
 	struct Population* population = Evolution_execute(parameters, configuration, data);
