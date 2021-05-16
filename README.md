@@ -7,7 +7,7 @@ Second part is written in C ([deciuss/scheduler-calculator](https://github.com/d
 
 Work is still in progress, but it is already possible to generate a decent timetable.
 
-##Usage
+## Usage
 
 To perform timetable calculation launch
 
