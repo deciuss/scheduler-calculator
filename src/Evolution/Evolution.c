@@ -126,7 +126,7 @@ struct Population* Evolution_execute(
 		parameters->stepFactorMin
 	);
 
-	for (int generationNumber = 0; generationNumber < parameters->numberOfGenerations; generationNumber++) {
+	for (int generationNumber = 0; true; generationNumber++) {
 
 		_Evolution_calculatePopulationFitness(data, population);
 
@@ -148,6 +148,10 @@ struct Population* Evolution_execute(
 		);
 
 		if (bestIndividual->violation->hard == 0 && bestIndividual->violation->soft == 0) {
+			break;
+		}
+
+		if (generationNumber > parameters->numberOfGenerations) {
 			break;
 		}
 
