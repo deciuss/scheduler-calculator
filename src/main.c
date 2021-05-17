@@ -21,24 +21,28 @@ int main(int argc, char * argv[]) {
 
 	struct Configuration* configuration = Configuration(argc, argv);
 
-	struct Data* data = Decoder_decode(CONFIGURATION_INPUT_DATA_PATHNAME);
+	struct Data* data = Decoder_decode(configuration->inputDataPathname);
 
 	struct Parameters* parameters = Parameters(
-		400,		// populationCardinality
-		2,			// numberOfFamilies
-		198,		// numberOfChildrenInFamily
-		0,			// numberOfSurvivors
-		0,			// numberOfClones
-		999999,		// numberOfGenerations
-		1.2,		// mutationRateEventBlockRelocation
-		1.01,		// stepIncrementFactor
-		1/5,		// stepIncrementRule
-		10.0,		// stepFactorMax
-		0.0000001,	// stepFactorMin
-		15			// stepMemory
+		/* populationCardinality */				400,
+		/* numberOfFamilies */					2,
+		/* numberOfChildrenInFamily */			198,
+		/* numberOfSurvivors */					0,
+		/* numberOfClones */					0,
+		/* numberOfGenerations */				configuration->numberOfGenerations,
+		/* mutationRateEventBlockRelocation */	1.2,
+		/* stepIncrementFactor */				1.01,
+		/* stepIncrementRule */					1/5,
+		/* stepFactorMax */						10.0,
+		/* stepFactorMin */						0.0000001,
+		/* stepMemory */						15
 	);
 
 	struct Population* population = Evolution_execute(parameters, configuration, data);
+
+	if (Population_getNthBestIndividual(population, 0)->violation->hard > 0) {
+		return 13;
+	}
 
 	Encoder_writeIndividualToFinalCsvFile(configuration, Population_getNthBestIndividual(population, 0));
 
