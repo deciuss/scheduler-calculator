@@ -13,6 +13,7 @@ struct Configuration* Configuration(int argc, char * argv[]) {
 	configuration->inputDataPathname = malloc(sizeof(char) * 255);
 	configuration->outputDataPathname = malloc(sizeof(char) * 255);
 	configuration->logPathname = malloc(sizeof(char) * 255);
+	configuration->reportPathname = malloc(sizeof(char) * 255);
 
 	configuration->inputDataPathname = CONFIGURATION_INPUT_DATA_PATHNAME;
 	configuration->outputDataPathname = CONFIGURATION_OUTPUT_DATA_PATHNAME;
@@ -32,6 +33,9 @@ struct Configuration* Configuration(int argc, char * argv[]) {
 
 	strcat(configuration->logPathname, configuration->outputDataPathname);
 	strcat(configuration->logPathname, ".log");
+
+	strcat(configuration->reportPathname, configuration->outputDataPathname);
+	strcat(configuration->reportPathname, ".report");
 
 	return configuration;
 }
