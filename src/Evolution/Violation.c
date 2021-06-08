@@ -28,3 +28,19 @@ int Violation_compare(struct Violation* violationA, struct Violation* violationB
 	}
 }
 
+float Violation_getInversed(struct Violation* violation, int biggestSoftViolation) {
+
+	float hardInversed = (violation->hard == 0) ? 2 : (1.0 / ((float) violation->hard));
+
+	float softInversed;
+
+	if (violation->soft == INT_MAX) {
+		softInversed = 0;
+	} else if (violation->soft == 0) {
+		softInversed = 2 * (float) biggestSoftViolation;
+	} else {
+		softInversed = ((float) biggestSoftViolation) / ((float) violation->soft);
+	}
+
+	return hardInversed + softInversed;
+}

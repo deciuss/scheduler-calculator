@@ -15,6 +15,7 @@
 #include "Fitness.h"
 #include "Mutation.h"
 #include "Step.h"
+#include "RouletteSelector.h"
 #include "../Utils.h"
 #include "../Configuration.h"
 #include "../Logger.h"

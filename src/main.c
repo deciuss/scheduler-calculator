@@ -24,15 +24,16 @@ int main(int argc, char * argv[]) {
 	struct Data* data = Decoder_decode(configuration->inputDataPathname);
 
 	struct Parameters* parameters = Parameters(
+		/* selectionMethod */					1, /* 0 for mi+lambda, 1 for roulette selection */
 		/* populationCardinality */				400,
-		/* numberOfFamilies */					2,
-		/* numberOfChildrenInFamily */			198,
+		/* numberOfFamilies */					380,
+		/* numberOfChildrenInFamily */			1,
 		/* numberOfSurvivors */					0,
 		/* numberOfClones */					0,
 		/* numberOfGenerations */				configuration->numberOfGenerations,
-		/* mutationRateEventBlockRelocation */	1.2,
+		/* mutationRateEventBlockRelocation */	1.0,
 		/* stepIncrementFactor */				1.01,
-		/* stepIncrementRule */					1/5,
+		/* stepIncrementRule */					0.2,
 		/* stepFactorMax */						10.0,
 		/* stepFactorMin */						0.0000001,
 		/* stepMemory */						15

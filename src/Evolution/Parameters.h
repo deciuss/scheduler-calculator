@@ -10,6 +10,7 @@
 #include <stdlib.h>
 
 struct Parameters {
+	int selectionMethod;
     int populationCardinality;
     int numberOfFamilies;
     int numberOfChildrenInFamily;
@@ -25,6 +26,7 @@ struct Parameters {
 };
 
 struct Parameters* Parameters(
+	int selectionMethod,
 	int populationCardinality,
 	int numberOfFamilies,
 	int numberOfChildrenInFamily,

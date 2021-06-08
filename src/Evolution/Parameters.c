@@ -7,6 +7,11 @@
 #include "Parameters.h"
 
 void _Parameters_validate(struct Parameters* parameters) {
+
+	if (parameters->selectionMethod == 1) {
+		return;
+	}
+
 	if (
 		parameters->numberOfFamilies * parameters->numberOfChildrenInFamily
 		+ parameters->numberOfFamilies * 2
@@ -26,6 +31,7 @@ void _Parameters_validate(struct Parameters* parameters) {
 }
 
 struct Parameters* Parameters(
+	int selectionMethod,
 	int populationCardinality,
 	int numberOfFamilies,
 	int numberOfChildrenInFamily,
@@ -40,6 +46,7 @@ struct Parameters* Parameters(
 	int stepMemorySize
 ) {
 	struct Parameters* parameters = malloc(sizeof(struct Parameters));
+	parameters->selectionMethod = selectionMethod;
 	parameters->populationCardinality = populationCardinality;
 	parameters->numberOfFamilies = numberOfFamilies;
 	parameters->numberOfChildrenInFamily = numberOfChildrenInFamily;
@@ -48,6 +55,7 @@ struct Parameters* Parameters(
 	parameters->numberOfGenerations = numberOfGenerations;
 	parameters->mutationRateEventBlockRelocation = mutationRateEventBlockRelocation;
 	parameters->stepIncrementFactor = stepIncrementFactor;
+	parameters->stepIncrementRule = stepIncrementRule;
 	parameters->stepFactorMax = stepFactorMax;
 	parameters->stepFactorMin = stepFactorMin;
 	parameters->stepMemorySize = stepMemorySize;

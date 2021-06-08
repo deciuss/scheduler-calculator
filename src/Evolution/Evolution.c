@@ -11,14 +11,21 @@ void _Evolution_calculatePopulationFitness(struct Data* data, struct Population*
 		population->individuals[individualIndex]->violation->hard =
 				Fitness_calculateHardViolationFactor(data, population->individuals[individualIndex]);
 
-		if (population->individuals[individualIndex]->violation->hard > 0) {
-			continue;
+		if (population->individuals[individualIndex]->violation->hard == 0) {
+			population->individuals[individualIndex]->violation->soft =
+							Fitness_calculateSoftViolationFactor(data, population->individuals[individualIndex]);
 		}
 
-		population->individuals[individualIndex]->violation->soft =
-				Fitness_calculateSoftViolationFactor(data, population->individuals[individualIndex]);
+		if (Violation_compare(population->individuals[individualIndex]->violation, population->individuals[population->ranking[0]]->violation) > 0) {
+			population->ranking[0] = individualIndex;
+		}
+
+		if (population->individuals[individualIndex]->violation->soft > population->biggestSoftViolation) {
+			if (population->individuals[individualIndex]->violation->soft != INT_MAX) {
+				population->biggestSoftViolation = population->individuals[individualIndex]->violation->soft;
+			}
+		}
 	}
-	Population_calculateRanking(population);
 }
 
 struct Individual* _Evolution_reproduce(struct Individual* parentA, struct Individual* parentB) {
@@ -60,12 +67,12 @@ void _Evolution_mutate(
 	}
 }
 
-void _Evolution_nextGeneration(
+void _Evolution_performMiPlusLambdaSelection(
 	struct Parameters* parameters,
-	struct Data* data,
-	struct Step* step,
 	struct Population* population
 ) {
+
+	Population_calculateRanking(population);
 
 	int parentIndex = 0;
 	int toReplaceIndex = 0;
@@ -90,6 +97,53 @@ void _Evolution_nextGeneration(
 			toReplaceIndex++,
 			Individual_clone(Population_getNthBestIndividual(population, clone))
 		);
+	}
+}
+
+void _Evolution_performRouletteSelection(
+	struct Parameters* parameters,
+	struct Population* population
+) {
+
+	struct RouletteSelector* rouletteSelector = RouletteSelector(population);
+
+	struct Population* newPopulation = Population(population->size);
+
+	int i = 0;
+
+	for (int family = 0; family < parameters->numberOfFamilies; family++) {
+		for (int childInFamily = 0; childInFamily < parameters->numberOfChildrenInFamily; childInFamily++) {
+			newPopulation->individuals[i++] = _Evolution_reproduce(
+				population->individuals[RouletteSelector_drawIndividualIndex(rouletteSelector)],
+				population->individuals[RouletteSelector_drawIndividualIndex(rouletteSelector)]
+			);
+		}
+	}
+
+	while (i < population->size) {
+		newPopulation->individuals[i++] = Individual_clone(population->individuals[RouletteSelector_drawIndividualIndex(rouletteSelector)]);
+	}
+
+	RouletteSelector_destruct(rouletteSelector);
+
+	Population_reassign(population, newPopulation);
+}
+
+void _Evolution_nextGeneration(
+	struct Parameters* parameters,
+	struct Data* data,
+	struct Step* step,
+	struct Population* population
+) {
+	switch(parameters->selectionMethod) {
+		case 0:
+			_Evolution_performMiPlusLambdaSelection(parameters, population);
+			break;
+		case 1:
+			_Evolution_performRouletteSelection(parameters, population);
+			break;
+		default:
+			exit(193);
 	}
 
 	_Evolution_mutate(parameters, data, step, population);

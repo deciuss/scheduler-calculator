@@ -10,8 +10,34 @@ struct Population* Population(int size) {
     struct Population* population = malloc(sizeof(struct Population));
     population->size = size;
     population->ranking = malloc(sizeof(int) * size);
+    population->ranking[0] = 0;
     population->individuals = malloc(sizeof(struct Individual*) * size);
+    population->biggestSoftViolation = 0;
     return population;
+}
+
+void Population_destruct(struct Population* population) {
+	for (int i = 0; i < population->size; i++) {
+		Individual_destruct(population->individuals[i]);
+	}
+
+	free(population->individuals);
+    free(population->ranking);
+    free(population);
+}
+
+void Population_reassign(struct Population* population, struct Population* newPopulation) {
+	for (int i = 0; i < population->size; i++) {
+		Individual_destruct(population->individuals[i]);
+	}
+
+	free(population->ranking);
+	free(population->individuals);
+
+	population->size = newPopulation->size;
+	population->ranking = newPopulation->ranking;
+	population->individuals = newPopulation->individuals;
+	free(newPopulation);
 }
 
 void Population_calculateRanking(struct Population* population) {
