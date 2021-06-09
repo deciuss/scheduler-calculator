@@ -17,7 +17,7 @@ struct RouletteSelector* RouletteSelector(struct Population* population) {
 	rouletteSelector->sections = malloc(population->size * sizeof(int));
 
 	for (int i = 0; i < population->size; i++) {
-		rouletteSelector->sections[i] = (i > 0) ? rouletteSelector->sections[i-1] : 0;
+		rouletteSelector->sections[i] = (i > 0) ? rouletteSelector->sections[i - 1] : 0;
 		rouletteSelector->sections[i] += Violation_getInversed(population->individuals[i]->violation, population->biggestSoftViolation);
 		rouletteSelector->limit = rouletteSelector->sections[i];
 	}
@@ -39,5 +39,5 @@ int RouletteSelector_drawIndividualIndex(struct RouletteSelector* rouletteSelect
 		}
 	}
 
-	exit(134);
+	return rouletteSelector->size - 1;
 }

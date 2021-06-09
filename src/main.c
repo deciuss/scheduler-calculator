@@ -24,10 +24,10 @@ int main(int argc, char * argv[]) {
 	struct Data* data = Decoder_decode(configuration->inputDataPathname);
 
 	struct Parameters* parameters = Parameters(
-		/* selectionMethod */					1, /* 0 for mi+lambda, 1 for roulette selection */
+		/* selectionMethod */					0, /* 0 for mi+lambda, 1 for roulette selection */
 		/* populationCardinality */				400,
-		/* numberOfFamilies */					380,
-		/* numberOfChildrenInFamily */			1,
+		/* numberOfFamilies */					2,
+		/* numberOfChildrenInFamily */			198,
 		/* numberOfSurvivors */					0,
 		/* numberOfClones */					0,
 		/* numberOfGenerations */				configuration->numberOfGenerations,

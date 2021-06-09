@@ -46,7 +46,7 @@ void _Step_updateCurrentFactor(struct Step* step) {
 	}
 
 	step->currentFactor *=
-		((numberOfSuccesses / step->successArraySize) > step->incrementRule)
+		((numberOfSuccesses / step->successArraySize) >= step->incrementRule)
 //		? step->incrementFactor
 //		: 1 / step->incrementFactor
 		? 1 / step->incrementFactor
